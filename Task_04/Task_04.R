@@ -14,7 +14,7 @@ barplot(rbind(Expectation, Observed), beside = T, main = bquote(chi^2 ~ "=" ~.(C
 results <- read.csv("http://jonsmitchell.com/data/biol112labresults.csv", stringsAsFactors=F)
 counts <- results[,c("yellow","red","green","blue","black","tan")]
 head(counts)
-backgrounds <- c("white","red","yellow","green","blue","black")
+backgrounds <- c("White","Red","Yellow","Green","Blue","Black")
 backgroundCol <- c("white", "#d53e4f", "#fee08b","abdda4","#3288bd","black")
 head(backgroundCol)
 calcChi(counts[1,])
