@@ -1,0 +1,8 @@
+setwd('/Users/Mac/Desktop/Evolution/Tasks/Task_06')
+source("https://jonsmitchell.com/code/reformatData07.R")
+source("https://jonsmitchell.com/code/simFxn.R")
+plot(1, 1, type="n", xlim=c(1998, 2013), ylim=c(0, 1))
+s <- apply(overallFreq, 2, function(x) lines(overallFreq[,1], x, col=rgb(0,0,0,0.1)))
+head(s)
+rescaleFreq <- apply(overallFreq[,3:ncol(overallFreq)], 2, function(x) x-x[1])
+plot(1, 1, type="n", xlim=c(1998, 2013), ylim=c(-0.25, 0.25))

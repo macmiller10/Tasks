@@ -4,8 +4,13 @@ install.packages("RcppArmadillo", dep=T)
 install.packages("https://cran.r-project.org/src/contrib/Archive/scrm/scrm_1.7.3-1.tar.gz", repos=NULL, type="source")
 install.packages("https://cran.r-project.org/src/contrib/Archive/coala/coala_0.6.0.tar.gz", repos=NULL, type="source")
 library(coala)
+library(phytools)
 library(learnPopGen)
-coalescent.plot(n=10, ngen=20, colors=NULL)
+coalescent.plot(5,10)
+coalescent.plot(5,10)
+coalescent.plot(5,10)
+mean(c(3,6,8))
+var(c(3,6,8))
 model <- coal_model(sample_size = 5, loci_number = 10, loci_length = 500, ploidy = 2) +
   feat_mutation(10) +
   feat_recombination(10) +
@@ -48,5 +53,17 @@ for (locus in 1:Nloci) {
 
 par(mfrow=c(1,1))
 densityTree(outPhy)
+model3 <- coal_model(10, 50) +
+  feat_mutation(par_prior("theta", sample.int(100, 1))) +
+  sumstat_nucleotide_div()
+stats <- simulate(model3, nsim = 40)
+mean_pi <- sapply(stats, function(x) mean(x$pi))
+head(mean_pi)
+theta <- sapply(stats, function(x) x$pars[["theta"]])
+head(theta)
+plot(mean_pi)
+plot(mean_pi, theta)
+Line <- lm(mean_pi ~theta)
+abline(Line)
 
 

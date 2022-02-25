@@ -1,0 +1,449 @@
+Sample1 <- sample(population1, Size)
+Sample1
+Sample2 <- sample(population2, Size)
+Sample2
+boxplot(Sample1, Sample2)
+source("http://jonsmitchell.com/code/simFxn04.R")
+MatGrandma <- makeFounder("grandma_mom")
+MatGrandma
+head(MatGrandma)
+MatGrandpa <- makefounder('grandpa_mom')
+MatGrandpa <- makeFounder('grandpa_mom')
+head(MatGrandpa)
+nrow(MatGrandpa)
+PatGrandma <- makeFounder("grandma_da")
+PatGrandpa <- makeFounder("grandpa_da")
+Alan <- makeBaby(PatGrandma, PatGrandpa)
+Alan
+head(Alan)
+Brenda <- makeBaby(MatGrandma, MatGrandpa)
+head(Brenda)
+Focus <- makeBaby(Brenda, Alan)
+head(Focus)
+ToMom <- length( grep("Mom", Focus))/ length( Focus )
+head(ToMom)
+ToMomMom <- length( grep("grandma_mom", Focus )) / length( Focus )
+head(ToMomMom)
+ToMomDad <- length( grep("grandpa_mom", Focus )) / length( Focus )
+head(ToMomDad)
+Sibling_01 <- makeBaby(Brenda, Alan)
+head(Sibling_01)
+ToSib <- length( intersect( Focus, Sibling_01 )) / length( Focus )
+head(ToSib)
+ManySiblings <- replicate( 1e3, length( intersect( Focus, makeBaby(Brenda, Alan))) / length ( Focus ))
+quantile(ManySiblings)
+mean(ManySiblings)
+plot(density(ManySiblings), main="", xlab="proportion shared genes")
+HWE<- function(p) {}
+aa <- p^2
+HWE <- function(p) {
+aa <- p^2
+ab <- 2 * p * (1 - p)
+bb <- (1 - p)^2
+return(c(aa=aa, ab=ab, bb=bb))
+}
+HWE(0.5)
+plot(1, 1, type="n", xlim=c(0, 1), ylim=c(0, 1), xlab="freq. allele a", ylab="geno. freq")
+p <- seq(from = 0, to = 1, by = 0.01)
+head(p)
+Genofreq <- t(sapply(p, HWE))
+head(Genofreq)
+lines(p, Genofreq[,"aa"], lwd=2, col="red")
+lines(p, Genofreq[,"ab"], lwd=2, col="purple")
+lines(p,Genofreq[,"bb"], lwd=2, col="blue")
+legend('top', legend=c("aa", "ab", "bb"), col=c("red", "purple", "blue"), lty=1, lwd=2, bty="n")
+Pop <- simPop(500)
+points(Pop[,"freqa"], Pop[,"Genotypes.aa"]/500, pch=21, bg="red")
+Pop <- simPop(50)
+points(Pop[,"freqa"], Pop[,"Genotypes.aa"]/50, pch=22, bg="red")
+library(learnPopGen)
+install.packages("learnPopGen")
+library(learnPopGen)
+x <- genetic.drift(Ne=200, nrep=5, pause=0.01)
+x
+x <- genetic.drift(Ne=100, nrep=5, pause=0.01)
+PopSizes <- 5:50
+Samples <- rep(PopSizes, 5)
+tExt <- sapply(Samples, fucntion(x) nrow(simPop(x, 500)))
+tExt <- sapply(Samples, fucntion(x), nrow(simPop(x, 500)))
+tExt <- sapply(Samples, function(x) nrow(simPop(x, 500)))
+Line <- lm(tExt ~ Samples)
+summary(Line)
+Line$coef
+plot(Samples, tExt)
+abline(Line)
+source("http://jonsmitchell.com/code/fxn05.R")
+Pop1 <- simPop(Popsize = 50, nGenerations = 100, initial_p = 0.5, h = 1, s = 0)
+head(Pop1)
+plot(1:nrow(Pop1), Pop1[,1], ylim=c(0,1), type = "1", xlab="generation", ylab="allele freq.", lwd=2)
+plot(1:nrow(Pop1), Pop1[,1], ylim=c(0, 1), type = "1", xlab="generation", ylab="allele freq.", lwd=2)
+source("http://jonsmitchell.com/code/fxn05.R")
+Pop1 <- simPop(Popsize = 50, nGenerations = 100, initial_p = 0.5, h = 1, s = 0)
+head(Pop1)
+plot(1:nrow(Pop1), Pop1[,1], ylim=c(0, 1), type = "1", xlab="generation", ylab="allele freq.", lwd=2)
+plot (1:nrow(Pop1), Pop1[,1], ylim=c(0, 1), type = "1", xlab="generation", ylab="allele freq.", lwd=2)
+plot(1:nrow(Pop1), Pop1[,1], ylim=c(0, 1), type = "1", xlab="generation", ylab="allele freq.", lwd=2)
+source("http://jonsmitchell.com/code/fxn05.R")
+Pop1 <- simPop(Popsize = 50, nGenerations = 100, initial_p = 0.5, h = 1, s = 0)
+head(Pop1)
+plot(1:nrow(Pop1), Pop1[,1], ylim=c(0, 1), type = "1", xlab="generation", ylab="allele freq.", lwd=2)
+plot(l:nrow(Pop1), Pop1[,1], ylim=c(0, 1), type = "1", xlab="generation", ylab="allele freq.", lwd=2)
+plot(1:nrow(Pop1), Pop1[,1], ylim=c(0, 1), type = "l", xlab="generation", ylab="allele freq.", lwd=2)
+lines(1:nrow(Pop1), Pop1[,2], lwd=2, col='red')
+legend("topleft", legend = c("a", "b"), col = c("black", "red"), lwd = 2, bty="n")
+plotFit(nruns = 10, n = 50, ngens = 100, init_p = 0.5, h = 1, s = 0)
+Expectation <- c(10, 10, 10, 10)
+Observed <- c(15, 15, 5, 5)
+Chisq <- sum(((expectation - observed) ^ 2) / Expectation )
+Chisq <- sum(((Expectation - observed) ^ 2) / Expectation )
+Chisq <- sum(((Expectation - Observed) ^ 2) / Expectation )
+head(Chisq)
+barplot(rbind(Expectation, Observed), beside = T, main = bquote(chi^2 ~ "=" ~.(Chisq)), legend.text=c("expected", "observed"))
+results <- read.csv("http://jonsmitchell.com/data/biol112labresults.csv", stringsAsFactors=F)
+counts <- results[,c("yellow","red","green","blue","black","tan")]
+head(counts)
+backgrounds <- c("white","red","yellow","green","blue","black")
+backgroundCol <- c("white", "#d53e4f", "#fee08b","abdda4","#3288bd","black")
+head(backgroundCol)
+calcChi(counts[1,])
+Chisqs <- apply(counts, 1, calcChi)
+head(Chisqs)
+plotChis(counts)
+Avg <- mean(Chisqs)
+head(Avg)
+backgroundAvgs <- tapply(Chisqs, results[,3], mean)
+head(backgroundAvgs)
+propSig <- length( which( Chisqs > 11.70) ) / length(Chisqs)
+percSig <- round(100 * propSig)
+head(percSig)
+par(las = 1, mar = c(4, 4, 1, 1), mgp = c(2, 0.5, 0), tck = -0.01, cex.axis=1)
+hist(Chisqs, main="", xlab="chi-squared values", ylab="frequency")
+par(las = 1, mar = c(4, 4, 1, 1), mgp = c(2, 0.5, 0), tck = -0.01, cex.axis=1)
+plot(1, 1, xlim=c(0, 400), ylim=c(1, 8.5), xlab="", ylab="", type="n", yaxt="n")
+axis(2, at = 1:length(backgrounds), labels = backgrounds)
+mtext(side=1, expression(chi^2), cex=1.75, line=2.5)
+counter <- 1
+for (i in backgrounds) {
+Data <- Chisqs[whihc(results[,3] = i)]
+for (i in backgrounds) {#
+  Data <- Chisqs[which(results[,3] == i)]
+addHist(Y=counter, Dat=Data, Color=backgroundCol[counter])
+counter <- counter +1
+}
+for (i in backgrounds) {#
+  Data <- Chisqs[which(results[,3] == i)]#
+  addHist(Y=counter, Dat=Data, Color=backgroundCol[counter])#
+  counter <- counter +1#
+}
+abline ( v = 11.70, lty=2, lwd = 2, col='black')
+Simulation <- simDraws(10000)
+head(Simulation)
+addHist(Y=7, Dat=Simulation, color="lightgray")
+addHist(Y=7, Dat=Simulation, Color="lightgray")
+mtext(side=2, at=7, line=0, "simulated")
+abline(v = 11.70, lty=2, lwd = 2, col='black')
+abline(v = 11.70, lty=2, lwd=2)
+Fit <- c(1, 1, 1, 1, 1, 1)
+Simulation2 <- simDraws(1e4, w = Fit)
+source("http://jonsmitchell.com/code/fxn05.R")#
+Pop1 <- simPop(Popsize = 50, nGenerations = 100, initial_p = 0.5, h = 1, s = 0)#
+head(Pop1)#
+plot(1:nrow(Pop1), Pop1[,1], ylim=c(0, 1), type = "l", xlab="generation", ylab="allele freq.", lwd=2)#
+lines(1:nrow(Pop1), Pop1[,2], lwd=2, col='red')#
+legend("topleft", legend = c("a", "b"), col = c("black", "red"), lwd = 2, bty="n")#
+plotFit(nruns = 10, n = 50, ngens = 100, init_p = 0.5, h = 1, s = 0)#
+#
+Expectation <- c(10, 10, 10, 10)#
+Observed <- c(15, 15, 5, 5)#
+Chisq <- sum(((Expectation - Observed) ^ 2) / Expectation )#
+head(Chisq)#
+barplot(rbind(Expectation, Observed), beside = T, main = bquote(chi^2 ~ "=" ~.(Chisq)), legend.text=c("expected", "observed"))#
+results <- read.csv("http://jonsmitchell.com/data/biol112labresults.csv", stringsAsFactors=F)#
+counts <- results[,c("yellow","red","green","blue","black","tan")]#
+head(counts)#
+backgrounds <- c("white","red","yellow","green","blue","black")#
+backgroundCol <- c("white", "#d53e4f", "#fee08b","abdda4","#3288bd","black")#
+head(backgroundCol)#
+calcChi(counts[1,])#
+Chisqs <- apply(counts, 1, calcChi)#
+head(Chisqs)#
+plotChis(counts)#
+Avg <- mean(Chisqs)#
+head(Avg)#
+backgroundAvgs <- tapply(Chisqs, results[,3], mean)#
+head(backgroundAvgs)#
+propSig <- length( which( Chisqs > 11.70) ) / length(Chisqs)#
+percSig <- round(100 * propSig)#
+head(percSig)#
+par(las = 1, mar = c(4, 4, 1, 1), mgp = c(2, 0.5, 0), tck = -0.01, cex.axis=1)#
+hist(Chisqs, main="", xlab="chi-squared values", ylab="frequency")#
+par(las = 1, mar = c(4, 4, 1, 1), mgp = c(2, 0.5, 0), tck = -0.01, cex.axis=1)#
+plot(1, 1, xlim=c(0, 400), ylim=c(1, 8.5), xlab="", ylab="", type="n", yaxt="n")#
+axis(2, at = 1:length(backgrounds), labels = backgrounds)#
+mtext(side=1, expression(chi^2), cex=1.75, line=2.5)#
+counter <- 1#
+for (i in backgrounds) {#
+  Data <- Chisqs[which(results[,3] == i)]#
+  addHist(Y=counter, Dat=Data, Color=backgroundCol[counter])#
+  counter <- counter +1#
+}
+head(results)
+head(Data)
+for (i in backgrounds) {#
+  Data <- Chisqs[which(results [,3] == i)]#
+  addHist(Y=counter, Dat=Data, Color=backgroundCol[counter])#
+  counter <- counter +1#
+}
+source("http://jonsmitchell.com/code/fxn05.R")#
+Pop1 <- simPop(Popsize = 50, nGenerations = 100, initial_p = 0.5, h = 1, s = 0)#
+head(Pop1)#
+plot(1:nrow(Pop1), Pop1[,1], ylim=c(0, 1), type = "l", xlab="generation", ylab="allele freq.", lwd=2)#
+lines(1:nrow(Pop1), Pop1[,2], lwd=2, col='red')#
+legend("topleft", legend = c("a", "b"), col = c("black", "red"), lwd = 2, bty="n")#
+plotFit(nruns = 10, n = 50, ngens = 100, init_p = 0.5, h = 1, s = 0)#
+#
+Expectation <- c(10, 10, 10, 10)#
+Observed <- c(15, 15, 5, 5)#
+Chisq <- sum(((Expectation - Observed) ^ 2) / Expectation )#
+head(Chisq)#
+barplot(rbind(Expectation, Observed), beside = T, main = bquote(chi^2 ~ "=" ~.(Chisq)), legend.text=c("expected", "observed"))#
+results <- read.csv("http://jonsmitchell.com/data/biol112labresults.csv", stringsAsFactors=F)#
+counts <- results[,c("yellow","red","green","blue","black","tan")]#
+head(counts)#
+backgrounds <- c("White","Red","Yellow","Green","Blue","Black")#
+backgroundCol <- c("white", "#d53e4f", "#fee08b","abdda4","#3288bd","black")#
+head(backgroundCol)#
+calcChi(counts[1,])#
+Chisqs <- apply(counts, 1, calcChi)#
+head(Chisqs)#
+plotChis(counts)#
+Avg <- mean(Chisqs)#
+head(Avg)#
+backgroundAvgs <- tapply(Chisqs, results[,3], mean)#
+head(backgroundAvgs)#
+propSig <- length( which( Chisqs > 11.70) ) / length(Chisqs)#
+percSig <- round(100 * propSig)#
+head(percSig)#
+par(las = 1, mar = c(4, 4, 1, 1), mgp = c(2, 0.5, 0), tck = -0.01, cex.axis=1)#
+hist(Chisqs, main="", xlab="chi-squared values", ylab="frequency")#
+par(las = 1, mar = c(4, 4, 1, 1), mgp = c(2, 0.5, 0), tck = -0.01, cex.axis=1)#
+plot(1, 1, xlim=c(0, 400), ylim=c(1, 8.5), xlab="", ylab="", type="n", yaxt="n")#
+axis(2, at = 1:length(backgrounds), labels = backgrounds)#
+mtext(side=1, expression(chi^2), cex=1.75, line=2.5)#
+counter <- 1#
+for (i in backgrounds) {#
+  Data <- Chisqs[which(results[,3] == i)]#
+  addHist(Y=counter, Dat=Data, Color=backgroundCol[counter])#
+  counter <- counter +1#
+}
+abline ( v = 11.70, lty=2, lwd = 2, col='black')#
+Simulation <- simDraws(10000)#
+head(Simulation)#
+addHist(Y=7, Dat=Simulation, Color="lightgray")#
+mtext(side=2, at=7, line=0, "simulated")#
+abline(v = 11.70, lty=2, lwd = 2, col='black')#
+abline(v = 11.70, lty=2, lwd=2)#
+Fit <- c(1, 1, 1, 1, 1, 1)#
+names(Fit) <- 1:6#
+Simulation2 <- simDraws(1e4, w = Fit)#
+addHist(Y=8, Dat=Simulation2, Color=rgb(0,0,0,0.25))#
+Fit <- c(0.1, 1, 1, 1, 1, 1)#
+names(Fit) <- 1:6#
+Simulation3 <- simDraws(1e4, w = Fit)#
+addHist(Y=8, Dat=Simulation3, color=rgb(0,0,0,0.25))#
+Fit <- c(0.5, 0.6, 0.7, 1, 1, 1)#
+names(Fit) <- 1:6#
+Simulation4 <- simDraws(1e4, w = Fit)#
+addHist(Y=8, Dat=Simulation4, color=rgb(0,0,0,0.25))#
+Fit <- c(0.1, 0.2, 0.3, 0.4, 0.5, 1)#
+names(Fit) <- 1:6#
+Simulation5 <- simDraws(1e4, w = Fit)#
+addHist(Y=8, Dat=Simulation5, color=rgb(0,0,0,0.25))#
+Fit <- c(0.1, 0.1, 0.1, 0.1, 0.1, 1)#
+names(Fit) <- 1:6 #
+Simulation6 <- simDraws(1e4, w = Fit)#
+addHist(Y=8, Dat=Simulation6, color=rgb(0,0,0,0.25))#
+mtext(side=2, at=8, line=0, "sel. sim.")#
+Simulation7 <- c(Simulation2, Simulation3, Simulation4, Simultation5, Simulation6)#
+addHist(Y=8, Dat=Simulation7, Color=rgb(0,0,1,0.25))
+model <- coal_model(sample_size = 5, loci_number = 10, loci_length = 500, ploidy = 2) +#
+  feat_mutation(10) +#
+  feat_recombination(10) +#
+  sumstat_trees() +#
+  sumstat_nucleotide_div()
+install.packages("rehh", dep=T)#
+install.packages("assertthat", dep=T)#
+install.packages("RcppArmadillo", dep=T)#
+install.packages("https://cran.r-project.org/src/contrib/Archive/scrm/scrm_1.7.3-1.tar.gz", repos=NULL, type="source")#
+install.packages("https://cran.r-project.org/src/contrib/Archive/coala/coala_0.6.0.tar.gz", repos=NULL, type="source")
+model <- coal_model(sample_size = 5, loci_number = 10, loci_length = 500, ploidy = 2) +#
+  feat_mutation(10) +#
+  feat_recombination(10) +#
+  sumstat_trees() +#
+  sumstat_nucleotide_div()
+install.packages("rehh", dep=T)
+install.packages("assertthat", dep=T)
+install.packages("RcppArmadillo", dep=T)
+install.packages("https://cran.r-project.org/src/contrib/Archive/scrm/scrm_1.7.3-1.tar.gz", repos=NULL, type="source")
+install.packages("https://cran.r-project.org/src/contrib/Archive/coala/coala_0.6.0.tar.gz", repos=NULL, type="source")
+model <- coal_model(sample_size = 5, loci_number = 10, loci_length = 500, ploidy = 2) +#
+  feat_mutation(10) +#
+  feat_recombination(10) +#
+  sumstat_trees() +#
+  sumstat_nucleotide_div()
+model <- coa1_model(sample_size = 5, loci_number = 10, loci_length = 500, ploidy = 2) +#
+  feat_mutation(10) +#
+  feat_recombination(10) +#
+  sumstat_trees() +#
+  sumstat_nucleotide_div()
+model <- coal_model(sample_size = 5, loci_number = 10, loci_length = 500, ploidy = 2) +#
+  feat_mutation(10) +#
+  feat_recombination(10) +#
+  sumstat_trees() +#
+  sumstat_nucleotide_div()
+library(coala)
+model <- coal_model(sample_size = 5, loci_number = 10, loci_length = 500, ploidy = 2) +#
+  feat_mutation(10) +#
+  feat_recombination(10) +#
+  sumstat_trees() +#
+  sumstat_nucleotide_div()
+head(model)
+stats <- simulate(model, nsim = 1)
+head(stats)
+Diversity <- stats$pi
+head(diversity)
+head(Diversity)
+Nloci <- length(stats$trees)
+t1 <- read.tree(text=stats$trees[[1][1]])
+t1 <- read.tree(text=stats$trees[[1]][1])
+head(Nloci)
+library(learnPopGen)
+?
+help
+help(learnPopGen)
+library(learnPopGen)
+coalescent.plot(n=10, ngen=20, colors=NULL, ...)
+coalescent.plot(n=10, ngen=20, colors=NULL)
+coalescent.plot(n=10, ngen=30, col.order("alternating"))
+coalescent.plot(n=10, ngen=30, colors=NULL)
+help(learnPopGen)
+??learnPopGen
+'??learnPopGen'
+?learnPopGen
+??learnPopGen
+coalescent.plot(n=10, ngen=30, col.order="alternating")
+coalescent.plot(n=10, ngen=20, col.order="alternating")
+coalescent.plot(n=10, ngen=10, col.order="alternating")
+model <- coal_model(sample_size = 5, loci_number = 10, loci_length = 500, ploidy = 2) +#
+  feat_mutation(10) +#
+  feat_recombination(10) +#
+  sumstat_trees() +#
+  sumstat_nucleotide_div()
+stats <- simulate(model, nsim = 1)
+Diversity <- stats$pi
+head(Diversity)
+Nloci <- length(stats$trees)
+t1 <- read.tree(text=stats$trees[[1]][1])
+library(coala)
+model <- coal_model(sample_size = 5, loci_number = 10, loci_length = 500, ploidy = 2) +#
+  feat_mutation(10) +#
+  feat_recombination(10) +#
+  sumstat_trees() +#
+  sumstat_nucleotide_div()
+stats <- simulate(model, nsim = 1)
+Diversity <- stats$pi
+Nloci <- length(stats$trees)
+t1 <- read.tree(text=stats$trees[[1]][1])
+library(coala)#
+library(phytools)#
+library(learnPopGen)
+coalescent.plot(5,10)
+mean(c(3,6,8))
+var(c(3,6,8))
+model <- coal_model(sample_size = 5, loci_number = 10, loci_length = 500, ploidy = 2) +#
+  feat_mutation(10) +#
+  feat_recombination(10) +#
+  sumstat_trees() +#
+  sumstat_nucleotide_div()
+stats <- simulate(model, nsim = 1)
+Diversity <- stats$pi
+Nloci <- length(stats$trees)
+t1 <- read.tree(text=stats$trees[[1]][1])
+plot(t1)
+axisphylo()
+age1 <- max(nodeHeights(t1))
+t2 <- read.tree(text=stats$trees[[2]][1])#
+plot(t2)#
+axisphylo()
+par(mfrow=c(1,2))#
+plot(t1)#
+axisphylo()#
+plot(t2)#
+axisphylo()#
+compare.chronograms(t1, t2)#
+t1_1 <- read.tree(text=stats$trees[[1]][1])#
+t1_2 <- read.tree(text=stats$trees[[1]][2])#
+compare.chronograms(t1_1, t1_2)#
+for (locus in 1:Nloci) {#
+  ntrees <- length(stats$trees[[locus]])#
+  for (n in 1:trees) {#
+    if (locus == 1 && n == 1) {#
+      outphy <- read.tree(text=stats$trees[[locus]][n])#
+    }#
+    else {#
+      outphy <- ape:::c.phylo(outPhy, read.tree(text=stats$trees[[locus]][n]))#
+    }#
+  }#
+}#
+#
+par(mfrow=c(1,1))#
+densityTree(outPhy)
+model3 <- coal_model(10, 50) +#
+  feat_mutation(par_prior("theta", sample.int(100,n 1))) +#
+  sumstat_nucleotide_div()
+stats <- simulate(model3, nsim = 40)
+model3 <- coal_model(10, 50) +#
+  feat_mutation(par_prior("theta", sample.int(100, 1))) +#
+  sumstat_nucleotide_div()
+stats <- simulate(model3, nsim = 40)
+mean_pi <- sapply(stats, function(x) mean(x$pi))
+theta <- sapply(stats, function(x) x$pars[["theta"]])
+head(theta)
+plot(mean_pi)
+plot(mean_pi, theta)
+Line <- lm(mean_pi ~theta)
+abline(Line)
+source("https://jonsmitchell.com/code/reformatData07.R")
+source("https://jonsmitchell.com/code/simFxn.R")
+plot(1, 1, type="n", xlim=c(1998, 2013), ylim=c(0, 1))
+s <- apply(overallFreq, 2, function(x) lines(overallFreq[,1], x, col=rgb(o,0,0,0.01)))
+s <- apply(overallFreq, 2, function(x) lines(overallFreq[,1], x, col=rgb(0,0,0,0.01)))
+source("https://jonsmitchell.com/code/reformatData07.R")#
+source("https://jonsmitchell.com/code/simFxn.R")
+source("https://jonsmitchell.com/code/reformatData07.R")
+source("https://jonsmitchell.com/code/reformatData07.R")#
+source("https://jonsmitchell.com/code/simFxn.R")#
+plot(1, 1, type="n", xlim=c(1998, 2013), ylim=c(0, 1))
+source("https://jonsmitchell.com/code/reformatData07.R")
+source("https://jonsmitchell.com/code/simFxn.R")
+source("https://jonsmitchell.com/code/simFxn.R")#
+plot(1, 1, type="n", xlim=c(1998, 2013), ylim=c(0, 1))
+source("https://jonsmitchell.com/code/simFxn.R")#
+> plot(1, 1, type="n", xlim=c(1998, 2013), ylim=c(0, 1))
+plot(1, 1, type="n", xlim=c(1998, 2013), ylim=c(0, 1))
+s <- apply(overallFreq, 2, function(x) lines(overallFreq[,1], x, col=rgb(0,0,0,0.01)))#
+head(s)#
+rescaleFreq <- apply(overallFreq[,3:ncol(overallFreq)], 2, function(x) x-x[1])#
+plot(1, 1, type"n", xlim=c(1998, 2013), ylim=c(-0.25, 0.25))
+source("https://jonsmitchell.com/code/reformatData07.R")
+source("https://jonsmitchell.com/code/simFxn.R")
+plot(1, 1, type="n", xlim=c(1998, 2013), ylim=c(0, 1))
+s <- apply(overallFreq, 2, function(x) lines(overallFreq[,1], x, col=rgb(0,0,0,0.01)))#
+head(s)
+head(s)
+source("https://jonsmitchell.com/code/reformatData07.R")
+setwd('/Users/Mac/Desktop/Evolution/Tasks/Task_06')
+source("https://jonsmitchell.com/code/reformatData07.R")
+source("https://jonsmitchell.com/code/simFxn.R")
+plot(1, 1, type="n", xlim=c(1998, 2013), ylim=c(0, 1))
+s <- apply(overallFreq, 2, function(x) lines(overallFreq[,1], x, col=rgb(0,0,0,0.1)))
